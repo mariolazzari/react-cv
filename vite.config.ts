@@ -1,24 +1,26 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import dts from "vite-plugin-dts";
 import path from "path";
 
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-
-// https://vitejs.dev/config/
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve("src", "src/components/index.jsx"),
-      name: "react-cv",
-      fileName: format => `react-cv.${format}.js`,
+      entry: path.resolve(__dirname, "index.ts"),
+      name: "ViteButton",
+      fileName: (format) => `index.${format}.js`,
     },
     rollupOptions: {
       external: ["react", "react-dom"],
       output: {
         globals: {
           react: "React",
+          "react-dom": "ReactDOM",
         },
       },
     },
+    sourcemap: true,
+    emptyOutDir: true,
   },
-  plugins: [react()],
+  plugins: [react(), dts()],
 });
